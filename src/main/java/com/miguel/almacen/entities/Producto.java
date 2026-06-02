@@ -34,7 +34,7 @@ public class Producto {
     @Column(name = "CANTIDAD", nullable = false)
     private Integer cantidad;
 
-    public void actualizar(Long id, String nombre, Categoria categoria,
+    public void actualizar( String nombre, Categoria categoria,
                            BigDecimal precio, Integer cantidad) {
 
         this.nombre = nombre.trim();
