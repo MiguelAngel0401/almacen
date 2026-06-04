@@ -10,7 +10,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Getter
 public enum EstadoVenta {
-    REGISTRADA("Resgistrada", 1L),
+    REGISTRADA("Registrada", 1L),
     CANCELADA("Cancelada", 0L);
 
     private final String descripcion;

@@ -11,9 +11,11 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Builder
 @Getter @Setter
-
 public class DetalleVenta {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_DETALLE_VENTA")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -35,5 +37,4 @@ public class DetalleVenta {
                 BigDecimal.valueOf(this.cantidadProducto)
         );
     }
-
 }

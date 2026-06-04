@@ -14,7 +14,7 @@ public class ProductoMapper {
 
         return Producto.builder()
                 .nombre(request.nombre().trim())
-                .categoria(null)
+                .categoria(categoria)
                 .precio(request.precio())
                 .cantidad(request.cantidad())
                 .build();
