@@ -32,9 +32,21 @@ public class ProductoServiceImpl implements ProductoService{
     @Override
     @Transactional(readOnly = true)
     public List<ProductoResponse> listar(String nombre, String categoria, BigDecimal precioMin, BigDecimal precioMax) {
-        log.info("Listando todos los productos");
+        log.info("Listando productos con filtros");
+
         return productoRepository.findAll().stream()
-                .map(productoMapper::entidadAResponse).toList();
+                .filter(p -> nombre == null || p.getNombre().toLowerCase().contains(nombre.toLowerCase()))
+                .filter(p -> {
+                    if (categoria == null || categoria.trim().isEmpty()) {
+                        return true;
+                    }
+                    Categoria cat = Categoria.obtenerCategoriaPorDescripcion(categoria.trim());
+                    return p.getCategoria() == cat;
+                })
+                .filter(p -> precioMin == null || p.getPrecio().compareTo(precioMin) >= 0)
+                .filter(p -> precioMax == null || p.getPrecio().compareTo(precioMax) <= 0)
+                .map(productoMapper::entidadAResponse)
+                .toList();
     }
 
     @Override
