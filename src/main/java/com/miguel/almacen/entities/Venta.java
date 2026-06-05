@@ -34,6 +34,7 @@ public class Venta {
 
     @OneToMany(mappedBy = "venta" , cascade = CascadeType.ALL,
     orphanRemoval = true, fetch = FetchType.LAZY)
+    @Builder.Default
     private List<DetalleVenta> detalleVentas = new ArrayList<>();
 
     public void agregarDetalle(DetalleVenta detalleVenta){

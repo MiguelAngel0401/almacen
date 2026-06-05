@@ -51,7 +51,7 @@ public class Producto {
 
     public void descontarCantidad(int cantidad){
         if(this.cantidad < cantidad)
-            throw  new IllegalArgumentException("Cantidad insuficiente para descansar");
+            throw  new IllegalArgumentException("Cantidad insuficiente para descontar");
         this.cantidad -= cantidad;
     }
 

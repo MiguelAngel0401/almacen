@@ -4,9 +4,11 @@ import com.miguel.almacen.dto.productos.ProductoRequest;
 import com.miguel.almacen.dto.productos.ProductoResponse;
 import com.miguel.almacen.entities.Producto;
 import com.miguel.almacen.enums.Categoria;
+import com.miguel.almacen.enums.EstadoVenta;
 import com.miguel.almacen.exceptions.RecursoNoEncontradoException;
 import com.miguel.almacen.mappers.ProductoMapper;
 import com.miguel.almacen.repositories.ProductoRepository;
+import com.miguel.almacen.repositories.VentaRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,8 @@ public class ProductoServiceImpl implements ProductoService{
     private final ProductoRepository productoRepository;
 
     private final ProductoMapper productoMapper;
+
+    private final VentaRepository ventaRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -75,10 +79,11 @@ public class ProductoServiceImpl implements ProductoService{
     public void eliminar(Long id) {
         Producto producto = obtenerProductoOException(id);
 
+        if (ventaRepository.existsByDetalleVentasProductoIdAndEstadoVenta(id, EstadoVenta.REGISTRADA))
+            throw new IllegalArgumentException("No se puede eliminar el producto, tiene ventas registradas");
+
         log.info("Eliminado producto con id: {}", id);
-
         productoRepository.delete(producto);
-
         log.info("Producto con id {} eliminado", id);
     }
 
